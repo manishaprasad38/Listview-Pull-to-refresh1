@@ -1,8 +1,11 @@
 package com.demo.app.assignment.views.fragments;
 
+import android.annotation.TargetApi;
+import android.app.ActionBar;
 import android.app.Fragment;
 import android.net.ConnectivityManager;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
@@ -10,14 +13,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.demo.app.assignment.R;
 import com.demo.app.assignment.model.News;
-import com.demo.app.assignment.viewmodel.DatabaseAdapter;
-import com.demo.app.assignment.viewmodel.NewsApplication;
+import com.demo.app.assignment.viewmodel.db.DatabaseAdapter;
+import com.demo.app.assignment.viewmodel.db.NewsApplication;
 import com.demo.app.assignment.viewmodel.callback.ApiServices;
 import com.demo.app.assignment.viewmodel.callback.AppGlobalTags;
+import com.demo.app.assignment.views.activity.HomeActivity;
 import com.demo.app.assignment.views.adapter.HomeAdapter;
 
 import java.util.ArrayList;
@@ -39,6 +44,7 @@ public class HomeFragment extends Fragment {
     private static final String TAG = "HomeFragment";
     ArrayList<News.RowsItem> infoList;
     SwipeRefreshLayout swipeRefreshLayout;
+    TextView txtHeader;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -53,13 +59,14 @@ public class HomeFragment extends Fragment {
 //        View view = homeBinding.getRoot();
 //        homeBinding.setNewsModel(newsViewModel);
         View view = inflater.inflate(R.layout.fragment_home, container, false);
-         setRetainInstance(true);
+        setRetainInstance(true);
         mListView = view.findViewById(R.id.listInfo);
+        txtHeader = view.findViewById(R.id.header);
         swipeRefreshLayout = (SwipeRefreshLayout)view.findViewById(R.id.simpleSwipeRefreshLayout);
         infoList = new ArrayList<News.RowsItem>();
         mDatabase = ((NewsApplication) getActivity().getApplication()).getDatabase();
         if (checkInternetConenction()) {
-            Data();
+            DataParse();
         } else {
             new OfflineNewsAsync().execute();
         }
@@ -70,16 +77,18 @@ public class HomeFragment extends Fragment {
                 // cancel the Visual indication of a refresh
                 swipeRefreshLayout.setRefreshing(false);
                 if (checkInternetConenction()) {
-                    Data();
+                    DataParse();
                 } else {
                     new OfflineNewsAsync().execute();
                 }
             }
         });
+
         return view;
     }
 
-    public void Data() {
+
+    public void DataParse() {
         try {
             ApiServices.ApiInterfaces apiInterfaces = ApiServices.getInstance()
                     .getClient(ApiServices.BASE_URL)
@@ -96,21 +105,19 @@ public class HomeFragment extends Fragment {
                             /**
                              * Got Successfully
                              */
+                            txtHeader.setText(response.body().getTitle());
                             /**
                              * Binding that List to Adapter
                              */
-                            // infoList.clear();
                             List<News.RowsItem> news = response.body().getRows();
 
                             for (News.RowsItem info : news) {
 
                                 // check conditon the isExistTodb
-//                                if (dataBaseHelper.isSampleExisting(sampleDto.getPackageId(), sampleDto.getTestPaperId(), userId)
-//                                        == SilverZoneTags.GlobalTag.Zero_Count) {
-//                                }
+
                                 mDatabase.open();
                                 mDatabase.addNews(info);
-                                Log.d("DB value inserted",info.toString());
+                                Log.d(TAG,info.toString());
                                 mDatabase.close();
                                 infoList.add(info);
 

@@ -7,7 +7,7 @@
     android:layout_height="match_parent">
     <fragment
         android:id="@+id/homefragment"
-        android:name="app.assignment.com.click2news.views.fragments.HomeFragment"
+        android:name="com.demo.app.assignment.views.fragments.HomeFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         />

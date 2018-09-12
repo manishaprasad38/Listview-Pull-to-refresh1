@@ -2,6 +2,7 @@ package com.demo.app.assignment.views.activity;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.databinding.DataBindingUtil;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.Window;
 
 import com.demo.app.assignment.R;
+import com.demo.app.assignment.databinding.ActivitySplashBinding;
 
 
 // Introduction of App
@@ -20,10 +22,10 @@ public class SplashActivity extends Activity {
         // for full screen
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         showSystemUI();
-        setContentView(R.layout.activity_splash);
+       // setContentView(R.layout.activity_splash);
         //data binding concept
-       // ActivitySplashBinding activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
-       // activitySplashBinding.getRoot();
+        ActivitySplashBinding activitySplashBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash);
+        activitySplashBinding.getRoot();
         // managing threads for 2 sec
         handler=new Handler();
         handler.postDelayed(new Runnable() {

@@ -12,7 +12,6 @@ import com.demo.app.assignment.R;
 import com.demo.app.assignment.model.News;
 import java.util.List;
 
-
 public class HomeAdapter extends BaseAdapter
 {
     Context mContext;
@@ -56,16 +55,21 @@ public class HomeAdapter extends BaseAdapter
         } else {
             holder = (ViewHolder) v.getTag();
         }
-
+        // setting the list custom row items
         holder.txtTitle.setText( mList.get(position).getTitle());
         holder.txtDescription.setText(mList.get(position).getDescription());
-        Glide.with(mContext).load(mList.get(position).getImageHref())
-                .thumbnail(0.5f).into(holder.mImage)
-                .onLoadStarted(mContext.getResources().getDrawable(R.mipmap.ic_launcher));
+        if(mList.get(position).getImageHref()!=null) {
+            Glide.with(mContext).load(mList.get(position).getImageHref())
+                    .thumbnail(0.5f).into(holder.mImage)
+                    .onLoadStarted(mContext.getResources().getDrawable(R.mipmap.ic_launcher));
+        }
+        else
+        {
+            Glide.with(mContext).load(R.mipmap.ic_launcher)
+                    .thumbnail(0.5f).into(holder.mImage)
+                    .onLoadStarted(mContext.getResources().getDrawable(R.mipmap.ic_launcher));
+        }
 
-//        ImageLoader imageLoader = ImageLoader.getInstance();
-  //      String image = mList.get(position).getImageHref().toString();
-    //    imageLoader.displayImage(image,holder.mImage);
         return v;
     }
     private class ViewHolder {

@@ -1,15 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.v4.widget.SwipeRefreshLayout android:id="@+id/simpleSwipeRefreshLayout"
+<android.support.v4.widget.SwipeRefreshLayout
+    android:id="@+id/simpleSwipeRefreshLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android">
-<FrameLayout android:layout_width="match_parent"
+<RelativeLayout android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+>
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="?actionBarSize"
+        android:background="#c7555cf2"
+        android:text=""
+        android:paddingLeft="@dimen/margin_left"
+        android:layout_alignParentLeft="true"
+        android:textStyle="bold"
+        android:gravity="left|center"
+        android:textColor="#fff"
+        android:textSize="@dimen/text_size_large"
+        />
     <ListView
         android:id="@+id/listInfo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/header"
         />
-</FrameLayout>
+</RelativeLayout>
 </android.support.v4.widget.SwipeRefreshLayout>

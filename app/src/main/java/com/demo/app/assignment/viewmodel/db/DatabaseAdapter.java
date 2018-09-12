@@ -1,4 +1,4 @@
-package com.demo.app.assignment.viewmodel;
+package com.demo.app.assignment.viewmodel.db;
 
 import android.content.ContentValues;
 import android.content.Context;
