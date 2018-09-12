@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="margin_left">16dp</dimen>
+    <dimen name="margin_right">16dp</dimen>
+    <dimen name="description_width">200dp</dimen>
+    <dimen name="text_size_small">12sp</dimen>
+    <dimen name="text_size_medium">13sp</dimen>
+    <dimen name="text_size_large">14sp</dimen>
+    <dimen name="image_size_large">100dp</dimen>
+</resources>
